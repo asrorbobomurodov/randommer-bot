@@ -1,5 +1,5 @@
 import requests
-from randommer import Randommer
+from .randommer import Randommer
 
 
 class Text(Randommer):
@@ -15,19 +15,21 @@ class Text(Randommer):
         Returns:
             str: Lorem text
         '''
-        pass
+        
+        url = f'{Randommer().get_url()}Text/LoremIpsum'
+
+        payload = {
+            'loremType': loremType,
+            'type': type,
+            'number': number
+        }
+        headers = {
+            'X-Api-Key': api_key
+        }
+
+        response = requests.get(url, params=payload, headers=headers)
+        return response.json()
     
-    def generate_password(self, api_key: str, length: int, hasDigits: bool, hasUppercase: bool, hasSpecial: bool) -> str:
-        '''Generate lorem ipsum
-
-        Args:
-            api_key (str): api key
-            length (int): lenth of password
-            hasDigits (bool): hasDigits
-            hasUppercase (bool): hasUppercase
-            hasSpecial (bool): hasSpecial
-
-        Returns:
-            str: pasword
-        '''
-        pass
+# ob = Text()
+# key = "9174cdd006f046029c4def5446299088"
+# print(ob.generate_LoremIpsum(key, 'normal', 'words', 3))

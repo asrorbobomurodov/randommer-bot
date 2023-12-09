@@ -1,5 +1,5 @@
 import requests
-from randommer import Randommer
+from .randommer import Randommer
 
 class Finance(Randommer):
     def get_crypto_address_types(self, api_key: str) -> list:
@@ -11,7 +11,15 @@ class Finance(Randommer):
         Returns:
             list: list of types
         '''
-        pass
+        
+        url = 'https://randommer.io/api/Finance/CryptoAddress/Types'
+
+        headers = {
+            "X-Api-Key": api_key
+        }
+
+        r = requests.get(url, headers=headers)
+        return r.json()
 
     def get_crypto_address(self, crypto_type: str, api_key: str) -> dict:
         '''get available crypto address
@@ -23,7 +31,16 @@ class Finance(Randommer):
         Returns:
             dict: crypto address
         '''
-        pass
+        url = self.get_url() + 'Finance/CryptoAddress'
+        payload = {
+            'cryptoType': crypto_type
+        }
+        headers = {
+            'X-Api-Key': api_key
+        }
+
+        response = requests.get(url, params=payload, headers=headers)
+        return response.json()
 
     def get_countries(self, api_key: str) -> list:
         '''get available countries
@@ -47,3 +64,7 @@ class Finance(Randommer):
             dict: idan data
         '''
         pass
+
+# f = Finance()
+# lst = f.get_crypto_address_types('9174cdd006f046029c4def5446299088')
+# print(type(lst))

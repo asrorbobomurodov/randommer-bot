@@ -1,5 +1,5 @@
 import requests
-from randommer import Randommer
+from .randommer import Randommer
 
 
 class Name(Randommer):
@@ -14,7 +14,17 @@ class Name(Randommer):
         Returns:
             list: list of names
         '''
-        pass
+        url = 'https://randommer.io/api/Name'
+        payload = {
+            'nameType': nameType,
+            'quantity': quantity
+        }
+        headers = {
+            'X-Api-Key': api_key
+        }
+
+        response = requests.get(url, params=payload, headers=headers)
+        return response.json()
     
     def get_name_suggestions(self, api_key: str, startingWords: str) -> list:
         '''get name suggestions
@@ -38,3 +48,7 @@ class Name(Randommer):
             list: list of names
         '''
         pass
+
+# key = '9174cdd006f046029c4def5446299088'
+# o = Name()
+# print(o.get_name(key, 'fullname', 1))

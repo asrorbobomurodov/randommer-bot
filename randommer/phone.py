@@ -1,6 +1,5 @@
 import requests
-from randommer import Randommer
-
+from .randommer import Randommer
 
 class Phone(Randommer):
     def generate(self, api_key: str, CountryCode: str, Quantity: int) -> list:
@@ -14,7 +13,19 @@ class Phone(Randommer):
         Returns:
             list: list of phone numbers
         '''
-        pass
+        url = 'https://randommer.io/api/Phone/Generate'
+
+        payload = {
+            "CountryCode": CountryCode,
+            "Quantity": Quantity
+        }
+        headers = {
+            'X-Api-Key': api_key
+        }
+
+        r = requests.get(url, params=payload, headers=headers)
+
+        return r.json()
     
     def get_IMEI(self, api_key: str, Quantity: int) -> list:
         '''get bulk imei
@@ -51,3 +62,7 @@ class Phone(Randommer):
             list: lsit of countries
         '''
         pass
+
+# ob = Phone()
+# key = '9174cdd006f046029c4def5446299088'
+# print(ob.generate(key, 'uz', 5))

@@ -1,5 +1,5 @@
 import requests
-from randommer import Randommer
+from .randommer import Randommer
 
 
 class Misc(Randommer):
@@ -12,7 +12,12 @@ class Misc(Randommer):
         Returns:
             list: list of cultures
         '''
-        pass
+        url = 'https://randommer.io/api/Misc/Cultures'
+        headers = {
+            "X-Api-Key": api_key
+        }
+        r = requests.get(url, headers=headers)
+        return r.json()
     
     def get_random_address(self, api_key: str, number: int, culture='en') -> list:
         '''get available misc cultures
@@ -25,4 +30,19 @@ class Misc(Randommer):
         Returns:
             list: random address
         '''
-        pass
+        url = 'https://randommer.io/api/Misc/Random-Address'
+
+        headers = {
+            'X-Api-Key': api_key
+        }
+
+        payload = {
+            'number': number,
+            'culture': culture
+        }
+        response = requests.get(url, params=payload, headers=headers)
+        return response.json()
+
+# m = Misc()
+# key = '9174cdd006f046029c4def5446299088'
+# print(m.get_random_address(key, 5))
